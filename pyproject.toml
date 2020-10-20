@@ -1,5 +1,5 @@
 [tool.poetry]
-name = ""cosmo_perturbations"
+name = "cosmo_perturbations"
 version = "0.1"
 description = "Cosmological perturbation theory assignment"
 authors = ["Kiyoshi Masui <kmasui@mit.edu>"]
