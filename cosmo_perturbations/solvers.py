@@ -3,7 +3,7 @@
 import numpy as np
 from scipy import optimize, linalg
 
-from cosmo_pertrubations import fiducial_parameters
+from cosmo_perturbations import fiducial_parameters
 
 NUMK = 100    # Increase for more finely sampled power spectra.
 
@@ -57,13 +57,13 @@ class MatterRadiationSolver:
 
     def H_tilde(self, lna):
         a = np.exp(lna)
-        return a * fiducial_parameters.hc_over_H0 * np.sqrt(self._omega_rad_h2 / a**4
+        return a * np.sqrt(self._omega_rad_h2 / a**4
                 + self._omega_m_h2 / a**3 + self._omega_lam_h2)
 
     def H_over_c(self, lna):
         """Hubble parameter over c. In 1/Mpc."""
         a = np.exp(lna)
-        return self.H_tilde / a / fiducial_parameters.hc_over_H0
+        return self.H_tilde(lna) / a / fiducial_parameters.hc_over_H0
 
     def field_ICs(self):
         raise NotImplementedError()
