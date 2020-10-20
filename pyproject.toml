@@ -1,12 +1,14 @@
 [tool.poetry]
-name = "hello_world"
+name = ""cosmo_perturbations"
 version = "0.1"
-description = "8.942 Environment setup example."
+description = "Cosmological perturbation theory assignment"
 authors = ["Kiyoshi Masui <kmasui@mit.edu>"]
 packages = [
-    {include = "hello_world"}
+    {include = "cosmo_perturbations"}
     ]
 
 [tool.poetry.dependencies]
 python = "^3.6"
 pytest = "^3.0"
+scipy = "^1.4.1"
+matplotlib = "^3.1.1"
