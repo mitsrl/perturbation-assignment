@@ -1,0 +1,12 @@
+[tool.poetry]
+name = "hello_world"
+version = "0.1"
+description = "8.942 Environment setup example."
+authors = ["Kiyoshi Masui <kmasui@mit.edu>"]
+packages = [
+    {include = "hello_world"}
+    ]
+
+[tool.poetry.dependencies]
+python = "^3.6"
+pytest = "^3.0"
