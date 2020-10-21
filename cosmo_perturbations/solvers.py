@@ -5,8 +5,6 @@ from scipy import optimize, linalg
 
 from cosmo_perturbations import fiducial_parameters
 
-NUMK = 100    # Increase for more finely sampled power spectra.
-
 
 class MatterRadiationSolver:
     """Solve for the evolution of the cosmological perturbation fields, including only matter,
@@ -25,6 +23,7 @@ class MatterRadiationSolver:
             h=fiducial_parameters.h,
             omega_m_h2=fiducial_parameters.omega_m_h2,
             omega_rad_h2=fiducial_parameters.omega_rad_h2,
+            num_k = 200,
             ):
 
         self._h = h
@@ -33,7 +32,7 @@ class MatterRadiationSolver:
         self._omega_lam_h2 = h**2 - omega_m_h2 - omega_rad_h2
 
         self._lna = np.log(np.logspace(-7, 0, 10000))
-        k = np.logspace(-5, 0, NUMK) * h
+        k = np.logspace(-5, 0, num_k) * h
         self._k_tilde = k * fiducial_parameters.hc_over_H0
 
     @property
@@ -79,4 +78,27 @@ class MatterRadiationSolver:
         raise NotImplementedError()
         self._solution = np.empty((len(self.k)), len(self.field_ICs), len(self.a))
 
+
+def radiation_turnoff(lna):
+    """Function used to smoothly "turn off" radiation evolution at z=500.
+
+    Returns 1 for z >> 500, 0 for z << 500.
+
+    """
+
+    LN_A_STOP_RAD = np.log(1. / 500)
+    LN_A_STOP_WID = 0.1
+    return 1. - 1. / (1 + np.exp(-(lna - LN_A_STOP_RAD) / LN_A_STOP_WID))
+
+
+def electron_decoupling(lna):
+    """Function used to decouple electrons from photons at recombination.
+
+    Returns 1 for z >> 1100, 0 for z << 1100.
+
+    """
+    a = np.exp(lna)
+    A_RECOMB = 1. / 1100
+    A_RECOMB_WID = 75. * A_RECOMB**2
+    return 1. - 1. / (1 + np.exp(-(a - A_RECOMB) / A_RECOMB_WID))
 
