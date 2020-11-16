@@ -46,7 +46,7 @@ class MatterRadiationSolver:
 
     @property
     def k_over_h(self):
-        """Wave number/h in 1/Mpc. Same as wavenumber in units of k/Mpc."""
+        """Wave number/h in 1/Mpc. Same as wavenumber in units of h/Mpc."""
         return self.k / self._h
 
     @property
